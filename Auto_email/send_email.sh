@@ -3,6 +3,7 @@
 recipient_email="RECIPIENT_EMAIL@gmail.com"
 error_email="EMAIL_FOR_ERRORS@gmail.com"
 log_file="/home/user/log.txt"
+datetime=$(date '+%Y-%m-%d-%H:%M:%S')
 
 # Function to calculate the month and day of the month for today
 month_day_today() {
@@ -31,12 +32,12 @@ while IFS= read -r line; do
         
         if [ -z "$message" ]; then
             # If message is blank, send an error email
-            echo "FAILED, DAY $day_number RECIPIENT (hidden) MESSAGE:$message " | mail "$error_email"
-            echo "FAILED, DAY $day_number RECIPIENT $recipient_email MESSAGE:$message " | tee -a $log_file
+            echo "FAILED, DATETIME $datetime DAY $day_number RECIPIENT (hidden) MESSAGE:$message " | mail "$error_email"
+            echo "FAILED, DATETIME $datetime DAY $day_number RECIPIENT $recipient_email MESSAGE:$message " | tee -a $log_file
             exit 1
         else
             echo "$message" | mail "$recipient_email"
-            echo "SUCCESSFUL, DAY $day_number RECIPIENT $recipient_email MESSAGE:$message " | tee -a $log_file
+            echo "SUCCESSFUL, DATETIME $datetime DAY $day_number RECIPIENT $recipient_email MESSAGE:$message " | tee -a $log_file
             exit 0
         fi
         
